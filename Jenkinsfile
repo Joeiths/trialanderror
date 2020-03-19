@@ -34,7 +34,7 @@ node {
    }} node {
 	junit '**/*xml'
  }
-}
+
 
 
 
