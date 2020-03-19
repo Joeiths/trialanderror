@@ -22,8 +22,8 @@ node {
         bat 'mvn test'
    }	
 } node {
-	junit '**/TEST*.xml'
- }
+junit '**/TEST*.xml'
+}
 
 stage name: 'Newman'
 node {
@@ -31,10 +31,10 @@ node {
         sh 'newman run RestfulBooker.postman_collection.json --environment RestfulBooker.postman_environment.json --reporters junit'
     } else {
         bat 'newman run RestfulBooker.postman_collection.json --environment RestfulBooker.postman_environment.json --reporters junit'
-   }} node {
-	junit '**/*xml'
- }
-
+   }
+} node {
+junit '**/*xml'
+}
 
 
 
