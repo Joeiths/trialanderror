@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Gnarga/trialanderror'
+                git ''
             }
         }
         stage('junit build') {
@@ -33,7 +33,7 @@ pipeline {
         }
         stage('robot') {
             steps {
-                    sh 'robot -d results --variable BROWSER:headlesschrome car.robot'
+                    sh 'robot -d results --variable BROWSER:headlesschrome Rental.robot'
             }
             post {
                 always {
