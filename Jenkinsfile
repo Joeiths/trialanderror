@@ -8,12 +8,12 @@ pipeline {
         }
         stage('junit build') {
                 steps {
-                    sh "mvn compile"
+                    sh "mvn -B compile"
                 }
         }
         stage('junit test') {
             steps {
-                sh "mvn test"
+                sh "mvn -B test"
             }
             post {
                 always {
@@ -33,7 +33,7 @@ pipeline {
         }
         stage('robot') {
             steps {
-                    sh 'robot -d results --variable BROWSER:headlesschrome Rental.robot'
+                    sh 'robot -d results --include LOGIN_01 --variable BROWSER:headlesschrome Rental.robot'
             }
             post {
                 always {
