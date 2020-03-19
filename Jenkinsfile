@@ -18,22 +18,22 @@ stage name: 'JUnit Test'
 node {
     if (isUnix()) {
         sh 'mvn test'
-	junit '**/TEST*.xml'
     } else {
         bat 'mvn test'
-	junit '**/TEST*.xml'
    }	
-}
+} node {
+	junit '**/TEST*.xml'
+ }
 
 stage name: 'Newman'
 node {
     if (isUnix()) {
         sh 'newman run RestfulBooker.postman_collection.json --environment RestfulBooker.postman_environment.json --reporters junit'
-	junit '**/TEST*.xml'
     } else {
         bat 'newman run RestfulBooker.postman_collection.json --environment RestfulBooker.postman_environment.json --reporters junit'
-	junit '**/TEST*.xml'
-   }
+   } node {
+	junit '**/*xml'
+ }
 }
 
 
