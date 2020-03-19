@@ -31,7 +31,7 @@ node {
         sh 'newman run RestfulBooker.postman_collection.json --environment RestfulBooker.postman_environment.json --reporters junit'
     } else {
         bat 'newman run RestfulBooker.postman_collection.json --environment RestfulBooker.postman_environment.json --reporters junit'
-   } node {
+   }} node {
 	junit '**/*xml'
  }
 }
