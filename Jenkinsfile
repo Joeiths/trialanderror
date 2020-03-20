@@ -21,6 +21,13 @@ pipeline {
                 }
             }
         }
+
+	stage('Create coverage report') {
+                     steps {
+                        sh "mvn cobertura:cobertura"
+		}
+	}
+
         stage('newman') {
             steps {
                 sh 'newman run "RestfulBooker.postman_collection.json" --environment "RestfulBooker.postman_environment.json" --reporters cli,junit'
@@ -58,7 +65,20 @@ pipeline {
     }
     post {
          always {
-            junit '**/*xml'
+		junit '**/*xml'
+		 step([$class: 'CoberturaPublisher',
+		 autoUpdateHealth: false, 
+		 autoUpdateStability: false, 
+		 coberturaReportFile: '**/coverage.xml', 
+		 failUnhealthy: false, 
+		 failUnstable: false, 
+		 maxNumberOfBuilds: 0, 
+		 onlyStable: false, 
+		 sourceEncoding: 'ASCII', 
+		 zoomCoverageChart: false
+		]
+	       )
+
            
          }
     }
