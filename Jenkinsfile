@@ -1,53 +1,65 @@
-stage('Checkout') {
-node {
-git 'https://github.com/Gnarga/trialanderror'
-	}
-}
-
-stage:('JUnit Build') {
-node {
-    if (isUnix()) {
-        echo "unix mode"
-	    sh 'mvn compile'
-    } else {
-        echo "windows mode"
-        bat 'mvn compile'
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Gnarga/trialanderror'
+            }
+        }
+        stage('junit build') {
+                steps {
+                    sh "mvn -B compile"
+                }
+        }
+        stage('junit test') {
+            steps {
+                sh "mvn -B test"
+            }
+            post {
+                always {
+                    junit '**/TEST*.xml'
+                }
+            }
+        }
+        stage('newman') {
+            steps {
+                sh 'newman run "RestfulBooker.postman_collection.json" --environment "RestfulBooker.postman_environment.json" --reporters cli,junit'
+            }
+            post {
+                always {
+                        junit '**/*xml'
+                    }
+                }
+        }
+        stage('robot') {
+            steps {
+                    sh 'robot -d results --include LOGIN_01 --variable BROWSER:headlesschrome Rental.robot'
+            }
+            post {
+                always {
+                    script {
+                          step(
+                                [
+                                  $class              : 'RobotPublisher',
+                                  outputPath          : 'results',
+                                  outputFileName      : '**/output.xml',
+                                  reportFileName      : '**/report.html',
+                                  logFileName         : '**/log.html',
+                                  disableArchiveOutput: false,
+                                  passThreshold       : 50,
+                                  unstableThreshold   : 40,
+                                  otherFiles          : "**/*.png,**/*.jpg",
+                                ]
+                           )
+                    }
+                }
+            }
+        }
     }
-  }
-}
-
-stage:('JUnit Test') {
-node {
-    if (isUnix()) {
-        sh 'mvn test'
-    } else {
-        bat 'mvn test'
-   }	
-} node {
-junit '**/TEST*.xml'
-}
-
-stage name: 'Newman'
-node {
-    if (isUnix()) {
-        sh 'newman run RestfulBooker.postman_collection.json --environment RestfulBooker.postman_environment.json --reporters junit'
-    } else {
-        bat 'newman run RestfulBooker.postman_collection.json --environment RestfulBooker.postman_environment.json --reporters junit'
-   }
-} node {
-junit '**/*xml'
-}
-
-
-
-
-
-
-
-stage name: 'Post'
-node {
-junit '**/TEST*.xml'
-emailext attachLog: true, attachmentsPattern: '**/TEST*xml',
-body: '', recipientProviders: [culprits()], subject:
-'$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
+    post {
+         always {
+            junit '**/*xml'
+           
+         }
+    }
 }
