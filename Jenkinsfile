@@ -1,65 +1,39 @@
 pipeline {
-    agent any
+  agent none
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Gnarga/trialanderror'
-            }
+      stage ('Checkout') {
+        agent any
+          steps {
+            checkout scm
+            git 'https://github.com/Gnarga/trialanderror'
+            stash includes: '**/target/*.jar', name: 'app'
+          }
         }
-        stage('junit build') {
-                steps {
-                    sh "mvn -B compile"
-                }
-        }
-        stage('junit test') {
-            steps {
-                sh "mvn -B test"
-            }
-            post {
-                always {
-                    junit '**/TEST*.xml'
-                }
-            }
-        }
-        stage('newman') {
-            steps {
-                sh 'newman run "RestfulBooker.postman_collection.json" --environment "RestfulBooker.postman_environment.json" --reporters cli,junit'
-            }
-            post {
-                always {
-                        junit '**/*xml'
-                    }
-                }
-        }
-        stage('robot') {
-            steps {
-                    sh 'robot -d results --include LOGIN_01 --variable BROWSER:headlesschrome Rental.robot'
-            }
-            post {
-                always {
-                    script {
-                          step(
-                                [
-                                  $class              : 'RobotPublisher',
-                                  outputPath          : 'results',
-                                  outputFileName      : '**/output.xml',
-                                  reportFileName      : '**/report.html',
-                                  logFileName         : '**/log.html',
-                                  disableArchiveOutput: false,
-                                  passThreshold       : 50,
-                                  unstableThreshold   : 40,
-                                  otherFiles          : "**/*.png,**/*.jpg",
-                                ]
-                           )
-                    }
-                }
-            }
-        }
+
+stage('Test on Linux') {
+  agent {
+    label 'linux'
+}
+steps {
+  unstash 'app'
+  sh "mvn -B compile"
+} post {
+    always {
+      junit '**/TEST*.xml'
     }
-    post {
-         always {
-            junit '**/*xml'
-           
-         }
+  }
+}
+
+stage('Test on Windows') {
+  agent {
+    label 'windows'
+}
+steps {
+  unstash 'app'
+  bat "mvn -B compile"
+} post {
+    always {
+      junit '**/TEST*.xml'
     }
+  }
 }
