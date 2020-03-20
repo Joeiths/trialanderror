@@ -11,12 +11,18 @@ pipeline {
                     sh "mvn -B compile"
                 }
         }
+
         stage('junit test') {
             steps {
-                sh "mvn -B test"
-                sh "mvn -B cobertura:cobertura -Dcobertura.report.format=xml"
+                sh "mvn -B test" 
             }
-           post {
+        }
+
+	stage('Cobertura coverage') {
+            steps {
+                sh "mvn cobertura:cobertura"
+            }
+            post {
                 always {
                     junit '**/TEST*.xml'
                 }
