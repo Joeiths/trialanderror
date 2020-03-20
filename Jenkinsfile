@@ -20,7 +20,7 @@ pipeline {
 
 	stage('Cobertura coverage') {
             steps {
-                sh "mvn cobertura:cobertura -Dcobertura.report.format=xml"
+                sh "mvn -B cobertura:cobertura -Dcobertura.report.format=xml"
             }
         }
 
