@@ -14,7 +14,7 @@ pipeline {
         stage('junit test') {
             steps {
                 sh "mvn -B test"
-                sh "mvn -B cobertura:cobertura"
+                sh "mvn -B cobertura:cobertura -Dcobertura.report.format=xml"
             }
            post {
                 always {
