@@ -14,19 +14,10 @@ pipeline {
         stage('junit test') {
             steps {
                 sh "mvn -B test"
+                sh "mvn -B cobertura:cobertura"
             }
-            post {
-                always {
-                    junit '**/TEST*.xml'
-                }
-            }
+           
         }
-
-	stage('Create coverage report') {
-                     steps {
-                        sh "mvn cobertura:cobertura"
-		}
-	}
 
         stage('newman') {
             steps {
@@ -63,23 +54,11 @@ pipeline {
             }
         }
     }
-    post {
-         always {
-		junit '**/*xml'
-		 step([$class: 'CoberturaPublisher',
-		 autoUpdateHealth: false, 
-		 autoUpdateStability: false, 
-		 coberturaReportFile: '**/coverage.xml', 
-		 failUnhealthy: false, 
-		 failUnstable: false, 
-		 maxNumberOfBuilds: 0, 
-		 onlyStable: false, 
-		 sourceEncoding: 'ASCII', 
-		 zoomCoverageChart: false
-		]
-	       )
+       post {
+        always {
+                junit '**/*xml'
+                step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
 
-           
-         }
+        }
     }
 }
