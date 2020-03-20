@@ -16,7 +16,11 @@ pipeline {
                 sh "mvn -B test"
                 sh "mvn -B cobertura:cobertura"
             }
-           
+           post {
+                always {
+                    junit '**/TEST*.xml'
+                }
+            }
         }
 
         stage('newman') {
