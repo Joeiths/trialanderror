@@ -22,6 +22,11 @@ pipeline {
             steps {
                 sh "mvn -B cobertura:cobertura -Dcobertura.report.format=xml"
             }
+	     post {
+                always {
+                    junit '**/TEST*.xml'
+                }
+            }
         }
 
         stage('newman') {
