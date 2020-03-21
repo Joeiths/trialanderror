@@ -67,6 +67,7 @@ pipeline {
        post {
         always {
                 junit '**/*xml'
+		cobertura coberturaReportFile: '*/.xml'
         	step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'cobertura.xml', failNoReports: false, failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])        
 	}
     }
