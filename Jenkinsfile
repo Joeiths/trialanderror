@@ -20,11 +20,11 @@ pipeline {
 
 	stage('Cobertura coverage') {
             steps {
-                sh "mvn -B cobertura:cobertura -Dcobertura.report.format=xml"
+                sh "mvn -B cobertura:cobertura"
             }
 	     post {
                 always {
-                    junit '**/TEST*.xml'
+                    
 		    cobertura coberturaReportFile: '**/coverage.xml'
                 }
             }
@@ -67,6 +67,7 @@ pipeline {
     }
        post {
         always {
+		junit '**/TEST*.xml'
                 junit '**/*xml'
         	}
     }
