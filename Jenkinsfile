@@ -25,7 +25,7 @@ pipeline {
 	     post {
                 always {
                     junit '**/TEST*.xml'
-		    cobertura coberturaReportFile: '*/.xml'
+		    cobertura coberturaReportFile: '**/coverage.xml'
                 }
             }
         }
