@@ -25,7 +25,7 @@ pipeline {
 	     post {
                 always {
                     junit '**/TEST*.xml'
-		    cobertura coberturaReportFile: '**/coverage.xml'
+		    
                 }
             }
         }
@@ -68,7 +68,7 @@ pipeline {
        post {
         always {
                 junit '**/*xml'
-		
+		cobertura coberturaReportFile: '**/coverage.xml'
         	}
     }
 }
