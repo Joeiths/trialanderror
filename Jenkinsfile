@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-		echo "java --version"
+		sh java --version
                 git 'https://github.com/Gnarga/trialanderror'
             }
         }
