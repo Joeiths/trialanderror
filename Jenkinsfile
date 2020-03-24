@@ -22,12 +22,6 @@ pipeline {
             steps {
                 sh "mvn -B cobertura:cobertura"
             }
-	     post {
-                always {
-                    
-		    cobertura coberturaReportFile: '**/coverage.xml'
-                }
-            }
         }
 
         stage('newman') {
@@ -40,6 +34,7 @@ pipeline {
                     }
                 }
         }
+
         stage('robot') {
             steps {
                     sh 'robot -d results --include LOGIN_01 --variable BROWSER:headlesschrome Rental.robot'
@@ -65,9 +60,9 @@ pipeline {
             }
         }
     }
-       post {
+      post {
         always {
-		 junit '**/*xml'
+                junit '**/*xml'
                 step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
 
         }
