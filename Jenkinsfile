@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Create coverage') {
                      steps {
-                        sh "mvn clean -B cobertura:cobertura"
+                        sh "mvn -B cobertura:cobertura"
 			
                      }
                 }
