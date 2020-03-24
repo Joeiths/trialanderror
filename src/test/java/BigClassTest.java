@@ -60,14 +60,14 @@ class BigClassTest {
     @Test
     void numberAgain() {
         BigClass b1 = new BigClass(6);
-        big.sumOfNumber(6);
+        b1.sumOfNumber(6);
         assertEquals(12, b1.getNumber());
     }
 
     @Test
     void stringTextTest() {
         BigClass b1 = new BigClass(69, "hej");
-        assertEquals("number=69, text=hej", big.toString());
+        assertEquals("number=69, text=hej", b1.toString());
     }
 
 }
