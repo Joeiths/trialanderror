@@ -66,6 +66,12 @@ class BigClassTest {
     }
 
     @Test
+    void notNumberAgain() {
+        BigClass b1 = new BigClass(6);
+        assertEquals("Not valid.", b1.sumOfNumber(-1));
+    }
+
+    @Test
     void stringTextTest() {
         BigClass b1 = new BigClass(69, "hej");
         assertEquals("number=69, text=hej", b1.toString());

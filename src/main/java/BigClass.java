@@ -48,10 +48,11 @@ public class BigClass {
     public void sumOfNumber (int numberTwo) {
         if (numberTwo > 0) {
             this.number = this.number + numberTwo;
+        } else {
+            return "Not valid.";
         }
     }
 
-    @Override
     public String toString() {
         return  "number=" + number + ", text=" + text ;
     }
