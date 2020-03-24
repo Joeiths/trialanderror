@@ -26,7 +26,7 @@ pipeline {
 		post {
                 always {
                     
-		    cobertura coberturaReportFile: '**/coverage.xml'
+		    junit '**/TEST*.xml'
                 }
             }
         }
@@ -67,11 +67,9 @@ pipeline {
         }
     }
        post {
-        always {
-		junit '**/TEST*.xml'
-                junit '**/*xml'
-                step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-
+        always {junit '**/TEST*.xml'
+             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+             
         }
     }
 }
