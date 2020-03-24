@@ -49,7 +49,7 @@ public class BigClass {
         if (numberTwo > 0) {
             this.number = this.number + numberTwo;
         } else {
-            return "Not valid.";
+            return;
         }
     }
 

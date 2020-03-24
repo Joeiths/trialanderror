@@ -68,7 +68,8 @@ class BigClassTest {
     @Test
     void notNumberAgain() {
         BigClass b1 = new BigClass(6);
-        assertEquals("Not valid.", b1.sumOfNumber(-1));
+        b1.sumOfNumber(-1);
+        assertEquals(6, b1.getNumber());
     }
 
     @Test
