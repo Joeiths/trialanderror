@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Create coverage') {
                      steps {
-                        sh "mvn cobertura:cobertura"
+                        sh "mvn cobertura:cobertura -Dcobertura.report.format=xml"
                      }
                 }
 
