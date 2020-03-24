@@ -26,7 +26,7 @@ pipeline {
 		post {
                 always {
                     
-		    junit '**/TEST*.xml'
+		    cobertura coberturaReportFile: '**/coverage.xml'
                 }
             }
         }
@@ -68,6 +68,7 @@ pipeline {
     }
        post {
         always {
+		junit '**/TEST*.xml'
                 junit '**/*xml'
                 step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
 
