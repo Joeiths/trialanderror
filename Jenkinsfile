@@ -13,12 +13,12 @@ pipeline {
         }
         stage('JUnit Test') {
              steps {
-                sh "mvn -B test -Dcobertura.report.format=xml"
+                sh "mvn -B test"
              }
         }
         stage('Create coverage') {
                      steps {
-                        sh "mvn -B cobertura:cobertura"
+                        sh "mvn -B cobertura:cobertura -Dcobertura.report.format=xml"
 			
                      }
                 }
