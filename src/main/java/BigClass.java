@@ -21,11 +21,7 @@ public class BigClass {
     }
 
     public void setNumber(int number) {
-        if (number > 0) {
             this.number = number;
-        } else {
-            this.number = 0;
-        }
     }
 
     public int getNumber () {
