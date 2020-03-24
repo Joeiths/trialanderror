@@ -32,6 +32,13 @@ class BigClassTest {
     }
 
     @Test
+    void postiveNumber() {
+        BigClass b1 = new BigClass();
+        b1.setNumber(7);
+        assertEquals(7, b1.getNumber());
+    }
+
+    @Test
     void negativeNumber() {
         BigClass b1 = new BigClass();
         b1.setNumber(-5);
