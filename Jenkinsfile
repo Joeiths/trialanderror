@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-		sh "java --version"
                 git 'https://github.com/Gnarga/trialanderror'
             }
         }
@@ -26,7 +25,7 @@ pipeline {
 	     post {
                 always {
                     
-		    cobertura coberturaReportFile: '**/coverage.xml'
+		    junit '**/TEST*.xml'
                 }
             }
         }
@@ -68,8 +67,9 @@ pipeline {
     }
        post {
         always {
-		junit '**/TEST*.xml'
-                junit '**/*xml'
+		
+	script { step (	step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+	) }
         	}
     }
 }
