@@ -3,16 +3,16 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Gnarga/trialanderror'
+                git 'https://github.com/Gnarga/trialanderror.git'
             }
         }
-        stage('junit build') {
+        stage('JUnit build') {
                 steps {
                     sh "mvn -B compile"
                 }
         }
 
-        stage('junit test') {
+        stage('JUnit tests') {
             steps {
                 sh "mvn -B test" 
             }
@@ -22,13 +22,7 @@ pipeline {
             steps {
 		sh "mvn clean install"
                 sh "mvn -B cobertura:cobertura"
-            }
-	     post {
-                always {
-                    
-		    junit '**/TEST*.xml'
-                }
-            }
+	   }
         }
 
         stage('newman') {
@@ -68,8 +62,10 @@ pipeline {
     }
        post {
         always {
-	step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-	
-        	}
+                junit '**/*xml'
+		junit '**/TEST*.xml'
+                step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+
+        }
     }
 }
