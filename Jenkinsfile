@@ -11,7 +11,13 @@ pipeline {
                 sh "mvn -B compile"
              }
         }
-        stage('JUnit Test med Cobertura coverage') {
+        stage('JUnit Test') {
+             steps {
+                sh "mvn -B test"
+             }
+        } 
+	
+	stage('Cobertura coverage') {
              steps {
                 sh "mvn -B cobertura:cobertura"
              }
