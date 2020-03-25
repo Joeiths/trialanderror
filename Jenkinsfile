@@ -18,7 +18,11 @@ pipeline {
              }
         } 
 	
-	
+	stage('Cobertura coverage') {
+             steps {
+                sh "mvn -B cobertura:cobertura"
+             }
+        }
        
         stage('Newman Postman') {
             steps {
