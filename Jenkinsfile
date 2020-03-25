@@ -11,13 +11,12 @@ pipeline {
                 sh "mvn -B compile"
              }
         }
-        stage('JUnit Test') {
+        stage('JUnit Test med Cobertura coverage') {
              steps {
-                sh "mvn -B test cobertura:cobertura"
+                sh "mvn -B cobertura:cobertura"
              }
         }
        
-
         stage('Newman Postman') {
             steps {
                 sh 'newman run "RestfulBooker.postman_collection.json" --environment "RestfulBooker.postman_environment.json" --reporters cli,junit'
