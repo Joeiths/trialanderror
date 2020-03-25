@@ -28,7 +28,7 @@ pipeline {
 
         stage('Newman Postman') {
             steps {
-                sh 'newman run "RestfulBooker.postman_collection.json" --environment "RestfulBooker.postman_environment.json" --reporters cli,junit -–reporter-junit-export “newman/myreport.xml”'
+                sh 'newman run "RestfulBooker.postman_collection.json" --environment "RestfulBooker.postman_environment.json" --reporters cli,junit -–reporter-junit-export "newman/myreport.xml"'
              }
 		post {
 		    always {
