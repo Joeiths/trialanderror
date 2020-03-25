@@ -11,18 +11,14 @@ pipeline {
                 sh "mvn -B compile"
              }
         }
+
         stage('JUnit Test') {
              steps {
                 sh "mvn -B test"
              }
         } 
 	
-	stage('Cobertura coverage') {
-             steps {
-		sh "mvn clean install"
-                sh "mvn -B cobertura:cobertura"
-             }
-        }
+	
        
         stage('Newman Postman') {
             steps {
