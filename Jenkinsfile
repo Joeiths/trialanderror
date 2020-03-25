@@ -26,7 +26,7 @@ pipeline {
              }
 	post {
                 always {
-	archiveArtifacts artifacts: '/var/lib/jenkins/workspace/FredrikJenkinsLab/target/site/cobertura/coverage.jar', fingerprint: true
+		archiveArtifacts artifacts: '**/*.jar', fingerprint: true
                     junit '**/TEST*.xml'
                 }
             }
@@ -69,7 +69,7 @@ pipeline {
     }
     post {
         always {
-            junit '/var/lib/jenkins/workspace/FredrikJenkinsLab/target/site/cobertura/coverage.xml'    
+               
             junit '**/*.xml'
 
         }
