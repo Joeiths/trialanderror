@@ -22,7 +22,6 @@ pipeline {
 	
 	stage('Cobertura coverage') {
              steps {
-		sh "mvn clean install"
                 sh "mvn -B cobertura:cobertura"
              }
         }
