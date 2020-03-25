@@ -22,11 +22,11 @@ pipeline {
 	
 	stage('Cobertura coverage') {
              steps {
-                sh "mvn -B cobertura:cobertura"
+                cobertura()
              }
 	post {
                 always {
-		archiveArtifacts artifacts: '**/*.jar', fingerprint: true
+		
                     junit '**/TEST*.xml'
                 }
             }
@@ -38,9 +38,7 @@ pipeline {
              }
             post {
                     always {
-				archive "target/site/cobertura"
-                       junit 'target/site/cobertura/coverage.xml'
-                            
+			junit '**/*.xml'    
                     }
              }
          }
