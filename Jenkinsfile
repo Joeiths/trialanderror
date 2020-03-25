@@ -22,7 +22,7 @@ pipeline {
 	
 	stage('Cobertura coverage') {
              steps {
-                cobertura()
+                sh "mvn -B cobertura:cobertura"
              }
 	post {
                 always {
