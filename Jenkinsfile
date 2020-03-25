@@ -21,7 +21,7 @@ pipeline {
           step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
         }
       }
-    }
+    
       }
         
 	
