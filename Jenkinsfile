@@ -39,8 +39,7 @@ pipeline {
 
         stage('Robot Selenium') {
              steps {
-        	sh 'robot --include LOGIN_01 --variable BROWSER:headlesschrome -d results tests'
-            }
+        	sh 'robot -d results --include LOGIN_01 --variable BROWSER:headlesschrome Rental.robot'}
              post {
                  always {
                      script {
@@ -64,7 +63,7 @@ pipeline {
     }
     post {
         always {
-                junit '**/*xml'
+                junit '**/TEST*.xml'
                 step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
 
         }
