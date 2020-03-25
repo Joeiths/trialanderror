@@ -33,8 +33,9 @@ pipeline {
 		post {
 		    always {
 			junit 'newman/*.xml'
-
+	   }
          }
+       }
 
         stage('Robot Selenium') {
              steps {
