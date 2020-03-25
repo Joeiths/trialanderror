@@ -38,7 +38,9 @@ pipeline {
              }
             post {
                     always {
-                            junit '**/*xml'
+				archive "target/site/cobertura"
+                       junit 'target/site/cobertura/coverage.xml'
+                            
                     }
              }
          }
