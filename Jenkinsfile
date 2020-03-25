@@ -14,7 +14,6 @@ pipeline {
 
         stage('JUnit Test') {
              steps {
-		sh "mvn clean install"
                 sh "mvn -B test"
              }
         } 
