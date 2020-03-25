@@ -39,7 +39,7 @@ pipeline {
 
         stage('Robot Selenium') {
              steps {
-        	sh 'robot -d results --include LOGIN_01 --variable BROWSER:headlesschrome Rental.robot'
+        	sh 'robot --include LOGIN_01 --variable BROWSER:headlesschrom e-d results tests  Rental.robot'
             }
              post {
                  always {
