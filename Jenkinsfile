@@ -13,15 +13,10 @@ pipeline {
         }
         stage('JUnit Test') {
              steps {
-                sh "mvn -B test"
+                sh "mvn -B test cobertura:cobertura"
              }
         }
-        stage('Create coverage') {
-                     steps {
-                        sh "mvn -B cobertura:cobertura"
-			
-                     }
-                }
+       
 
         stage('Newman Postman') {
             steps {
