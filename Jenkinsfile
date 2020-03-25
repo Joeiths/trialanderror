@@ -68,8 +68,9 @@ pipeline {
     }
     post {
         always {
-                junit '**/TEST*.xml'
-                cobertura coberturaReportFile: "**/cobertura-coverage.xml"
+                archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+            junit 'build/reports/**/*.xml'
+
         }
     }
 }
