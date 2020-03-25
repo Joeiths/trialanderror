@@ -15,7 +15,11 @@ pipeline {
         stage('JUnit Test') {
              steps {
                 sh "mvn -B test"
-             }
+             }	 post {
+        always {
+          step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
+        }
+      }
         } 
 	
 	stage('Cobertura coverage') {
